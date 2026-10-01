@@ -1,13 +1,17 @@
 package com.ecommerce.auth.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommerce.auth.dto.LoginRequest;
+import com.ecommerce.auth.dto.LoginResponse;
 import com.ecommerce.auth.dto.RegisterRequest;
 import com.ecommerce.auth.entity.User;
 import com.ecommerce.auth.service.AuthService;
+
+import jakarta.validation.Valid;
 
 @RestController
 public class AuthController {
@@ -19,16 +23,21 @@ public class AuthController {
 	}
 	
 	@PostMapping("/auth/register")
-	public User register(@RequestBody RegisterRequest request) {
+	public User register(@Valid @RequestBody RegisterRequest request) {
 		
 		return authService.register(request);
 		
 	}
 	
 	@PostMapping("/auth/login")
-	public User login(@RequestBody LoginRequest request) {
+	public LoginResponse login(@Valid @RequestBody LoginRequest request) {
 		
 		return authService.login(request);
+	}
+	
+	@GetMapping("/admin/test")
+	public String adminTest() {
+		return "Admin access granted";
 	}
 
 }
