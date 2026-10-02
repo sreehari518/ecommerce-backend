@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.ecommerce.auth.dto.LoginRequest;
 import com.ecommerce.auth.dto.LoginResponse;
 import com.ecommerce.auth.dto.RegisterRequest;
+import com.ecommerce.auth.dto.RegisterResponse;
 import com.ecommerce.auth.entity.User;
 import com.ecommerce.auth.repository.UserRepository;
 import com.ecommerce.auth.security.JwtService;
@@ -25,7 +26,7 @@ public class AuthService {
 			this.jwtService = jwtService;
 		}
 		
-		public User register(RegisterRequest request) {
+		public RegisterResponse register(RegisterRequest request) {
 			
 			if(userRepository.existsByEmail(request.getEmail())) {
 				throw new RuntimeException("Email already registered");
@@ -40,8 +41,16 @@ public class AuthService {
 			
 			user.setRole("USER");
 			
-			return userRepository.save(user);
+			User savedUser = userRepository.save(user);
 			
+			return new RegisterResponse(
+					
+					savedUser.getName(),
+					savedUser.getEmail(),
+					savedUser.getRole()
+					);
+					
+			 
 		}
 		
 		public LoginResponse login(LoginRequest request) {

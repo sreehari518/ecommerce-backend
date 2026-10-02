@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ecommerce.auth.dto.LoginRequest;
 import com.ecommerce.auth.dto.LoginResponse;
 import com.ecommerce.auth.dto.RegisterRequest;
+import com.ecommerce.auth.dto.RegisterResponse;
 import com.ecommerce.auth.entity.User;
 import com.ecommerce.auth.service.AuthService;
 
@@ -23,7 +24,7 @@ public class AuthController {
 	}
 	
 	@PostMapping("/auth/register")
-	public User register(@Valid @RequestBody RegisterRequest request) {
+	public RegisterResponse register(@Valid @RequestBody RegisterRequest request) {
 		
 		return authService.register(request);
 		
@@ -35,9 +36,9 @@ public class AuthController {
 		return authService.login(request);
 	}
 	
-	@GetMapping("/admin/test")
-	public String adminTest() {
-		return "Admin access granted";
-	}
+//	@GetMapping("/admin/test")
+//	public String adminTest() {
+//		return "Admin access granted";
+//	}
 
 }
